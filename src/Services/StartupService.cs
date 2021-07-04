@@ -32,7 +32,12 @@ namespace Discord.RanSelBot.Services
 
       if (string.IsNullOrWhiteSpace(discordToken))
       {
-        throw new Exception("Необходимо заполнить параметр 'token:discord' в файле конфигурации.");
+        discordToken = Environment.GetEnvironmentVariable("tokens__discord");
+
+        if (string.IsNullOrWhiteSpace(discordToken))
+        {
+          throw new Exception("Необходимо заполнить параметр 'token:discord' в файле конфигурации.");
+        }
       }
 
       await _discord.LoginAsync(TokenType.Bot, discordToken);
